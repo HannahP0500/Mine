@@ -1,0 +1,22 @@
+{
+    "name": "Mathlib4 dev container",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "onCreateCommand": "lake exe cache get!",
+    "hostRequirements": {
+        "cpus": 4
+    },
+    "customizations": {
+        "codespaces": {
+            "openFiles": [
+                "README.md"
+            ]
+        },
+        "vscode": {
+            "extensions": [
+                "leanprover.lean4"
+            ]
+        }
+    }
+}
