@@ -43,6 +43,8 @@ example: ¬(P ∨ Q) ↔ ¬P ∧ ¬Q := by -- Not p or q if and only if not p an
   · intro h
 
     · cases' h with hnP hnQ -- Split h into h not p and h not q
+        -- (P V Q) → false
+        -- Assume (P V Q), Prove false
       · intro h
         cases' h with hP hQ
         · apply hnP
