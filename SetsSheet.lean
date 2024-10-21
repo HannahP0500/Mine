@@ -80,7 +80,9 @@ Let's prove some theorems.
 -/
 
 example : A ⊆ A := by
+-- Introducing Hypotheses --
 intro h1 h2
+-- Goal is h2 so finished --
 exact h2
 ------------------------------------------
 example : A ⊆ B → B ⊆ C → A ⊆ C := by
@@ -113,6 +115,7 @@ cases' h2 with hA hB
 exact hA
 ------------------------------------------
 example : A ⊆ B → A ⊆ C → A ⊆ B ∩ C := by
+-- Introduces hypotheses --
 intro hAB hAC x hA
 -- Splits into two cases --
 constructor
@@ -128,6 +131,7 @@ constructor
   exact hA
 -------------------------------------------
 example : B ⊆ A → C ⊆ A → B ∪ C ⊆ A := by
+-- Introduces hypotheses --
 intro hBA hCA x hBC
 -- Uses Cases To Split The Union B U C --
 cases' hBC with hB hC
@@ -141,16 +145,57 @@ cases' hBC with hB hC
 -- Proving hC --
 -- Uses hCA to prove x belongs to x belongs to A --
 · apply hCA at hC
--- Goal is hC --
+-- Goal equals hC --
   exact hC
 --------------------------------------------
 example : A ⊆ B → C ⊆ D → A ∪ C ⊆ B ∪ D := by
-intro hAB hCD hAC hBU
+-- Introduces hypotheses --
+intro hAB hCD x hAC
+-- Splits hAC into x ∈ A and x ∈ C --
+cases' hAC with hA hC
+-- Case 1.1 --
+-- Use hAB to prove x belongs to B --
+· apply hAB at hA
+-- Eliminate D from the goal --
+  left
+-- Goal equals hA --
+  exact hA
 
-
+-- Case 1.2 --
+-- Use hCD to prove x belongs to D --
+· apply hCD at hC
+-- Eliminates B from the goal --
+  right
+-- Goal equals hC --
+  exact hC
+done
 --------------------------------------------
-example : A ⊆ B → C ⊆ D → A ∩ C ⊆ B ∩ D := by sorry
+example : A ⊆ B → C ⊆ D → A ∩ C ⊆ B ∩ D := by
+-- Introduces hypotheses --
+intro hAB hCD x hAC
+-- Splits the goal into x ∈ B and x ∈ D
+constructor
 
+-- Case 1 --
+-- Splits hAC into x ∈ A and x ∈ C --
+· cases' hAC with hA hC
+-- Case 1.1 --
+-- Uses hAB to prove x ∈ B --
+  apply hAB at hA
+-- Goal equals hA --
+  exact hA
+
+
+-- Case 2 --
+-- Splits hAC into x ∈ A and x ∈ C --
+· cases' hAC with hA hC
+-- Case 2.1 --
+-- Uses hCD to prove x ∈ C --
+  apply hCD at hC
+-- Goal equals hC --
+  exact hC
+
+done
 ------------------------------Moodle Example--------------------------------------
 variable (X : Type) -- Everything will be a subset of `X`
   (A B C D : Set X)

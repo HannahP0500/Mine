@@ -51,18 +51,6 @@ example: ¬(P ∨ Q) ↔ ¬P ∧ ¬Q := by -- Not p or q if and only if not p an
           exact hP
         · apply hnQ
           exact hQ
-
-
-
-
-
-
-
-
-
-
-
-
 done
 
 -- Question 3 --
@@ -78,7 +66,7 @@ intro hBA hCA x hBC
 cases' hBC with hB hC
 
 -- Proving hB --
--- Uses hBA to prove x belongs to A --
+-- Uses hBA to prove x ∈ A --
 -- Given b is a subset of A and x is in B x belongs to A -- Lecture Comment
 · apply hBA at hB
 -- Goal is hB --
