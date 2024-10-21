@@ -73,5 +73,49 @@ done
 
 -- Question 4 --
 example: B ⊆ A → C ⊆ A → (B ∪ C) ⊆ A := by
-sorry
+intro hBA hCA x hBC
+-- Uses Cases To Split The Union B U C --
+cases' hBC with hB hC
+
+-- Proving hB --
+-- Uses hBA to prove x belongs to A --
+-- Given b is a subset of A and x is in B x belongs to A -- Lecture Comment
+· apply hBA at hB
+-- Goal is hB --
+-- x is in A --
+  exact hB
+
+-- Proving hC --
+-- Uses hCA to prove x belongs to x belongs to A --
+-- Given c is a subset of A and x is in c x belongs to A -- Lecture Comment
+· apply hCA at hC
+-- Goal is hC --
+  exact hC
 done
+
+-- Question 5 --
+example : A ∪ (B ∪ C) = A ∪ B ∪ C := by
+  ext x -- Changes = to if and only if
+  constructor -- Split LHS -> RHS & RHS -> LHS
+  · intro h
+    cases' h with hA hBC
+    · left
+      left
+      exact hA
+    · cases' hBC with hB hC
+      · left
+        right
+        exact hB
+      · right
+        exact hC
+  · intro h
+    cases' h with hAB hC
+    · cases' hAB with hA hB
+      · left
+        exact hA
+      · right
+        left
+        exact hB
+    · right
+      right
+      exact hC
