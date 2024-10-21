@@ -22,6 +22,7 @@ example: ¬(P ∨ Q) ↔ ¬P ∧ ¬Q := by -- Not p or q if and only if not p an
 -- Split LHS → RHS and RHS → LHS
   constructor
   -- Case One Assume LHS True
+  -- Introduce Hypothesis --
   · intro h
     -- Split
     constructor
@@ -61,13 +62,13 @@ done
 
 -- Question 4 --
 example: B ⊆ A → C ⊆ A → (B ∪ C) ⊆ A := by
+-- Introduce Hypotheses --
 intro hBA hCA x hBC
 -- Uses Cases To Split The Union B U C --
 cases' hBC with hB hC
 
 -- Proving hB --
 -- Uses hBA to prove x ∈ A --
--- Given b is a subset of A and x is in B x belongs to A -- Lecture Comment
 · apply hBA at hB
 -- Goal is hB --
 -- x is in A --
@@ -75,7 +76,6 @@ cases' hBC with hB hC
 
 -- Proving hC --
 -- Uses hCA to prove x belongs to x belongs to A --
--- Given c is a subset of A and x is in c x belongs to A -- Lecture Comment
 · apply hCA at hC
 -- Goal is hC --
   exact hC
@@ -83,27 +83,55 @@ done
 
 -- Question 5 --
 example : A ∪ (B ∪ C) = A ∪ B ∪ C := by
-  ext x -- Changes = to if and only if
-  constructor -- Split LHS -> RHS & RHS -> LHS
-  · intro h
-    cases' h with hA hBC
+  -- Changes = to ↔ --
+  ext x
+  -- Splits into two case LHS → RHS and RHS → LHS --
+  constructor
+  -- Case 1 --
+  -- Introduce Hypothesis --
+  · intro hABC
+    -- Split into two cases x ∈ A & x ∈ B ∪ C --
+    cases' hABC with hA hBC
+
+    -- Case 1.1 --
+      -- Eliminates C from the goal --
     · left
+      -- Eliminates B from the goal --
       left
+      -- Goal equals hA --
       exact hA
+
+    -- Case 1.2 --
     · cases' hBC with hB hC
+      -- Case 1.2.1 --
+      -- Eliminates C from the goal --
       · left
+      -- Eliminates A from the goal --
         right
+      -- Goal equals hB --
         exact hB
+
+      -- Case 1.2.2 --
+      -- Eliminates A & B from the goal --
       · right
+      -- Goal equals hC --
         exact hC
-  · intro h
-    cases' h with hAB hC
+
+-- Case 2 --
+  · intro hABC
+    cases' hABC with hAB hC
+    -- Case 2.1 --
     · cases' hAB with hA hB
+      -- Case 2.1.1 --
       · left
         exact hA
+      -- Case 2.1.2
       · right
         left
         exact hB
+    -- Case 2.2
     · right
       right
       exact hC
+
+done
